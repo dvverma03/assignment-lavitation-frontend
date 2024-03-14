@@ -19,7 +19,7 @@ const Body = () => {
     const token1 = token.substring(6,)
     token && navigate("/invoice")
     if (!data.length) {
-      axios.post("http://localhost:1234/browse", { token1 })
+      axios.post("https://assignment-lavitation-backend.vercel.app/browse", { token1 })
         .then((res) => {
           const userId = res.data._id
           console.log(res)
