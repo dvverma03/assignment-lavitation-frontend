@@ -15,9 +15,10 @@ const Body = () => {
   console.log(data)
 
   useEffect(() => {
+    const token = document.cookie;
+    const token1 = token.substring(6,)
+    token && navigate("/invoice")
     if (!data.length) {
-      const token = document.cookie;
-      const token1 = token.substring(6,)
       axios.post("http://localhost:1234/browse", { token1 })
         .then((res) => {
           const userId = res.data._id
@@ -30,8 +31,6 @@ const Body = () => {
           }
         })
         .catch((err) => console.log(err));
-
-      token && navigate("/invoice")
     }
   }, []);
 
