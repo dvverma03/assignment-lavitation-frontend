@@ -37,7 +37,7 @@ const Login = () => {
 
     if (!message) {
       axios
-        .post("http://localhost:1234/login", {email, password })
+        .post("https://assignment-lavitation-backend.vercel.app/login", {email, password })
         .then((res) => {
           const userId= res.data._id
           console.log(userId)
@@ -54,7 +54,7 @@ const Login = () => {
   useEffect(()=> {
     const token = document.cookie;
     const token1=token.substring(6,)
-    axios.post("http://localhost:1234/browse",{token1})
+    axios.post("https://assignment-lavitation-backend.vercel.app/browse",{token1})
     .then((res) => {
       const userId= res.data._id
       console.log(res)
