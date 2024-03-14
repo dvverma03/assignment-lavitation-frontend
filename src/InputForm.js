@@ -36,7 +36,7 @@ const InputForm = () => {
     } else {
 
       const invoiceData = { product, quantity, rate, total, userId }
-      axios.post('http://localhost:1234/add-invoice', invoiceData)
+      axios.post('https://assignment-lavitation-backend.vercel.app/add-invoice', invoiceData)
         .then(response => {
           console.log("Invoice added successfully to the database:", response.data);
         })
