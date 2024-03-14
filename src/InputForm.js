@@ -15,6 +15,12 @@ const InputForm = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store)
   const userId = user?.userId
+  const [calculate, setCalculate]= useState(false)
+
+  function CalculateFirst(){
+            setCalculate(true);
+  }
+  
 
   const calculateTotal = (e) => {
     e.preventDefault();
@@ -33,9 +39,13 @@ const InputForm = () => {
 
     if (!product || !quantity || !rate || total === "Please enter both quantity and rate") {
       setError("Please fill in all fields");
+    }
+    else if(!calculate){
+      setError("Please calculate Total first")
     } else {
 
       const invoiceData = { product, quantity, rate, total, userId }
+      dispatch(addInvoice(invoiceData))
       axios.post('https://assignment-lavitation-backend.vercel.app/add-invoice', invoiceData)
         .then(response => {
           console.log("Invoice added successfully to the database:", response.data);
@@ -100,6 +110,7 @@ const InputForm = () => {
         </div>
         <button
           type="submit"
+          onClick={CalculateFirst}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
           Calculate Total
