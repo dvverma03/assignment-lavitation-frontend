@@ -43,7 +43,7 @@ const Register = () => {
 
     if (!message) {
       try {
-        const response = await axios.post("http://localhost:1234/register", { fullName, email, password });
+        const response = await axios.post("https://assignment-lavitation-backend.vercel.app/register", { fullName, email, password });
         dispatch(addId(response?.data?.user));
         dispatch(addUsers({ fullName, email }));
         alert("Created");
