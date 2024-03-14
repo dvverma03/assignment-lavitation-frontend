@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUsers } from "./utils/userslice";
 import { addId } from "./utils/idSlice";
+import { addInvoice } from "./utils/invoiceslice";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const Register = () => {
   const dispatch = useDispatch()
 
   const FormValidation = (email, password) => {
+
+
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
       email
     );
@@ -52,8 +55,7 @@ const Register = () => {
         setErrMessage("User already exists");
       }
     }
-  };
-
+  }
 
   return (
     <div>
