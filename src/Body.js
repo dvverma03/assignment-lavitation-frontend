@@ -1,7 +1,7 @@
-// import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Cards from './cards';
-import { addInvoice } from './utils/invoiceslice';
+import { addInvoice, removeInvoice } from './utils/invoiceslice';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,28 +11,30 @@ const Body = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const data = useSelector(store => store.invoice.invoice);
-  console.log(data)
+  let data = []; 
+  data = useSelector(store => store.invoice.invoice);
 
   useEffect(() => {
     const token = document.cookie;
     const token1 = token.substring(6,)
-    token && navigate("/invoice")
     if (!data.length) {
       axios.post("https://assignment-lavitation-backend.vercel.app/browse", { token1 })
-        .then((res) => {
-          const userId = res.data._id
-          console.log(res)
-          dispatch(addId(userId))
-          {
-            res?.data?.products.length > 0 && res.data.products.map((e) => {
-              dispatch(addInvoice(e))
-            })
-          }
-        })
-        .catch((err) => console.log(err));
+      .then((res) => {
+        const userId = res.data._id
+        console.log(res)
+        dispatch(addId(userId))
+        dispatch(removeInvoice())
+        {
+          res?.data?.products.length > 0 && res.data.products.map((e) => {
+
+            dispatch(addInvoice(e))
+          })
+        }
+      })
+      .catch((err) => console.log(err));
     }
-  }, []);
+    token && navigate("/invoice")
+  }, [data]);
 
   const invoice = useSelector((store) => store?.invoice?.invoice);
 
