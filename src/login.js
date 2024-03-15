@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addId } from "./utils/idSlice";
-import { addInvoice } from "./utils/invoiceslice";
+import { addInvoice, removeInvoice } from "./utils/invoiceslice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,9 +36,12 @@ const Login = () => {
     setErrMessage(message);
 
     if (!message) {
+      localStorage.setItem("email",email)
       axios
+        // .post("http://localhost:1234/login", {email, password })  
         .post("https://assignment-lavitation-backend.vercel.app/login", {email, password })
         .then((res) => {
+          console.log(res)
           const userId= res.data._id
           dispatch(addId(userId))
           {res?.data?.products.length>0 && res.data.products.map((e)=>{
@@ -46,26 +49,29 @@ const Login = () => {
           })}
           navigate("/invoice")
         })
-        .catch((err) => setErrMessage("user not exist"));
+        .catch((err) => setErrMessage("incorrect credential"));
     }
   };
 
   useEffect(()=> {
-    const token = document.cookie;
-    console.log(token)
-    const token1=token.substring(6,)
-    axios.post("https://assignment-lavitation-backend.vercel.app/browse",{token1})
+    const email = localStorage.getItem("email");
+    console.log(email)
+    dispatch(removeInvoice())
+    axios
+    .post("https://assignment-lavitation-backend.vercel.app/browse",{email})
+    
+    // .post("http://localhost:1234/browse", {email, password })
     .then((res) => {
       const userId= res.data._id
-      console.log(res)
       dispatch(addId(userId))
       {res?.data?.products.length>0 && res.data.products.map((e)=>{
         dispatch(addInvoice(e))
+        console.log(e)
       })}
     })
     .catch((err) => console.log(err));
 
-    token && navigate("/invoice")
+    email && navigate("/invoice")
 
   }, []);
 
