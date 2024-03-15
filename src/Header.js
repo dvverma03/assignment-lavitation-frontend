@@ -23,18 +23,7 @@ const Header = () => {
 
   function HandleLogout() {
     dispatch(removeInvoice())
-    const token = document.cookie;
-    const token1 = token.substring(6);
-    axios
-      .post("https://assignment-lavitation-backend.vercel.app/logout", { token1 })
-      .then((res) => alert("User logout successfully"))
-      .catch((err) => console.log(err));
-      function deleteCookie(name) {
-        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      }
-      
-      deleteCookie("token");
-      
+    localStorage.removeItem("email")
     navigate("/");
   }
 
