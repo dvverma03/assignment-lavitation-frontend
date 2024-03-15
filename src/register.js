@@ -4,7 +4,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUsers } from "./utils/userslice";
 import { addId } from "./utils/idSlice";
-import { addInvoice } from "./utils/invoiceslice";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -46,6 +45,8 @@ const Register = () => {
 
     if (!message) {
       try {
+        // const response = await axios.post("http://localhost:1234/register", { fullName, email, password });
+
         const response = await axios.post("https://assignment-lavitation-backend.vercel.app/register", { fullName, email, password });
         dispatch(addId(response?.data?.user));
         dispatch(addUsers({ fullName, email }));
