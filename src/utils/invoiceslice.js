@@ -10,11 +10,9 @@ const invoiceSlice = createSlice({
         state.invoice.push(action.payload);
     },
     removeInvoice: (state) => {
-      return {
-          ...state,
-          invoice: []  
-      };
-  },
+      state.invoice = []; // Clear the invoice array in place
+    },
+    
   
   },
 });
